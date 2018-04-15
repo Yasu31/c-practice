@@ -26,3 +26,24 @@ The 4 last hexadecimal digits are the Device ID (3108 = ThinkPad 800dpi Optical 
 ```
 * [HowToIdentifyADeviceUSB](https://wiki.debian.org/HowToIdentifyADevice/USB)
 * [Linu x の USB -Qiita](https://qiita.com/propella/items/66eb1e93cc71ebea3829)
+
+## pyserial
+`python -m serial.tools.list_ports` lists available ports
+
+* `Serial.name`: device name
+
+### finding out information about USB devices before connecting
+Use the serial.tools.list_ports module
+```python
+from serial.tools import list_ports
+ports=list_ports.comports()
+for port in ports:
+  print("device path\t"+port.device)
+  print("vendor id:\t"+str(port.vid))
+  print("product id:\t"+str(port.pid))
+```
+
+*does connecting to serial port require sudo???*
+
+* [pyserial overview](https://pythonhosted.org/pyserial/pyserial.html#overview)
+* [pyserial tools](http://pyserial.readthedocs.io/en/latest/tools.html)
