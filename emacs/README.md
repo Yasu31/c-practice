@@ -17,9 +17,13 @@ lets you use the command⌘ key like always in emacs. But it seems to be old, so
 
 ## Git
 *ctrl-x g* to see info about current repo
+*n* and *p* to move around, *s* to stage. *c c* to commit. Write a message, then *ctrl-c ctrl-c* to commit.
 * [Magit](https://magit.vc/)
 * [install Magit](https://magit.vc/manual/magit/Installing-from-an-Elpa-Archive.html#Installing-from-an-Elpa-Archive)
 
 ## Packages
 Emacs has facility that lets you download & install packages
 * [Emacs lisp packages](http://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages)
+
+## buffers
+*C-x 0* to delete selected window, *C-x 1* to delete all windows except selected
