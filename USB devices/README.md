@@ -41,6 +41,13 @@ for port in ports:
   print("device path\t"+port.device)
   print("vendor id:\t"+str(port.vid))
   print("product id:\t"+str(port.pid))
+  print("product:\t"+str(port.product))
+  print("manufacturer:\t"+str(port.manufacturer))
+  print("serial number:\t"+str(port.serial_number))
+  print("description:\t"+str(port.description))
+  print("hwid:\t"+str(port.hwid))
+  print("interface:\t"+str(port.interface))
+  print("location:\t"+str(port.location))
 ```
 
 *does connecting to serial port require sudo???*
