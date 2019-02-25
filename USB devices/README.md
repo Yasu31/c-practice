@@ -54,3 +54,13 @@ for port in ports:
 
 * [pyserial overview](https://pythonhosted.org/pyserial/pyserial.html#overview)
 * [pyserial tools](http://pyserial.readthedocs.io/en/latest/tools.html)
+
+## /dev directory
+location of device files. Everything is a file, in UNIX.
+
+# screen command
+*screen* command lets you connect to /dev device(by using the special file to a serial device), like `sudo screen /dev/ttyUSB0 38400`. *ctrl-a k* to quit.
+
+screen command is actually a **terminal multiplexer**- more about that in */Terminal stuff*.
+
+connect to mouse?

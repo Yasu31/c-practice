@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
         }
 
         printf("connected from %s.\n", inet_ntoa(clitSockAddr.sin_addr));
-      close(clitSock);
+	      close(clitSock);
     }
 
     return EXIT_SUCCESS;

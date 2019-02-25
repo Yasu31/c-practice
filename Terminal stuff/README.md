@@ -1,5 +1,16 @@
 # Terminal stuff
+## shell
+a command-line interpreter(computer programs designed to interpret a sequence of lines of text which may be entered by a user, read from a file or another kind of data stream.) or shell(UI for accessing OS services. Can be either CUI or GUI).
 
+### screen
+Terminal multiplexers can multiplex separate login sessions inside a single terminal display. Useful for separating programs from session of Unix shells, so that the process can continue after user is disconnected.
+
+So [`screen` can be used in a similar way to `nohup`](https://qiita.com/IshitaTakeshi/items/531e4c9c1782a7549a62)- to continue processes even after exiting shell.
+
+ctrl+a c : new screen
+exit: kill current screen
+screen -ls : view current screens
+screen -r [Process ID] ; attach screen
 ## `which` command
 shows location of a program
 > In theory, all programs should run from the /usr/bin folder but in reality, this is not the case.

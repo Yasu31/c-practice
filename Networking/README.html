@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1><a href="https://www.boost.org/doc/libs/1_69_0/doc/html/boost_asio/overview.html">Asio</a></h1>
+
+<h1>BSD sockets</h1>
+
+<p>ネットワークの抽象化インタフェースとしてのデファクトスタンダードとなっている。</p>
+
+<p>run the tcpd.c program as <code>tcpd 80</code>, then try to connect to <em>localhost:80</em>! 
+Run <code>netstat -tln</code> </p>
+
+<ul>
+<li><a href="https://qiita.com/tajima_taso/items/2f0606db7764580cf295">C言語で学ぶソケットAPI入門 第1回 サーバ編</a></li>
+<li><a href="https://qiita.com/tajima_taso/items/fb5669ddca6e4d022c15"> 第2回 クライアント編</a></li>
+<li><a href="https://qiita.com/tajima_taso/items/13b5662aca1f68fc6e8e"> 第3回 サーバ/クライアント編 #1</a></li>
+<li><a href="https://qiita.com/tajima_taso/items/fdfed88c1e735ffb41e8">第4回 UDPサーバ/クライアント編 #1</a></li>
+<li><a href="https://qiita.com/tajima_taso/items/b8f2ee3eb84880778cad">C言語で学ぶモダンなソケットAPI入門</a></li>
+</ul>
+
+<p>UDP and TCP are separate protocols but on the same layer, UDP is more unreliable, they are both one step higher level than IP.</p>
+
+<h2>3-way handshake</h2>
+
+<p>in TCP
+1. client sends connection request (SYN)
+1. server sends back SYN and ACK
+1. client sends back ACK</p>
+
+</body>
+</html>

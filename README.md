@@ -97,7 +97,7 @@ std::array<int, MAX_LEN> c;
 # serialization
 serialization (or serialisation) is the process of translating data structures or object state into a format that can be stored (for example, in a file or memory buffer) or transmitted (for example, across a network connection link) and reconstructed later (possibly in a different computer environment).
 
-with ROS,
+[with ROS](http://wiki.ros.org/roscpp/Overview/MessagesSerializationAndAdaptingTypes),
 ```cpp
 namespace ser = ros::serialization;
 
