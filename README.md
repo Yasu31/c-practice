@@ -86,7 +86,7 @@ int a[MAX_LEN] = {};
 int b[MAX_LEN];
 
 std::vector<int> a(MAX_LEN);
-std::vector<int> b;
+td::vector<int> b;
 b.push_back(1);
 
 // with arrays, initial length must be decided first
@@ -142,9 +142,75 @@ public:
 
 This means that charge() is a *pure virtual function*; A class that has even a single pure virtual function is an *abstract class*. Instances of abstract classes cannot be created; it is supposed to be used as a template for its child classes.
 
-# shared_ptr
+# Smart Pointers
+why not take pointers, an already weird concept, and make that even more convoluted and confusing by making it "smart"??
+
+[C++11スマートポインタ入門](https://qiita.com/hmito/items/db3b14917120b285112f)
+Smart pointer: concept of "ownership"- self-releases memory when the memory that it owns is no longer required (uses destructor)
+
+## unique_ptr
+
+## shared_ptr
+>shared_ptr\<T\>は、所有権を持つポインタの数を記録するカウンタを持っている。所有権を持つ shared_ptr\<T\>がコピーされると、内部でカウンタがインクリメントされ、ディストラクタや明示的解放時にデクリメントされる。全ての所有者がいなくなると、カウンタがゼロとなり、メモリが開放される。カウンタで所有者数を管理することで、複数の shared_ptr\<T\>が所有権を保持していても、適切なタイミングで一度だけメモリ解放が実行されるのである。
+
+``` cpp
+
+
+#include<memory>
+#include<iostream>
+int main(){
+   //空のshared_ptrを作成
+   std::shared_ptr<int> ptr;
+
+   {
+      //intの所有権を持つ、ptr2を作成
+      std::shared_ptr<int> ptr2(new int(0));
+
+      //ptr2の所有権をptrにコピー、共有する
+      ptr=ptr2;
+
+      *ptr+=10;
+      *ptr2+=10;
+
+   }//ここで、ptr2のディストラクタが呼ばれる
+    //ptrも同一のメモリに対する所有権を持っているため、まだ解放はされない
+
+   //当然、ptrはまだ使用可能
+   std::cout<<"ptr="<<*ptr<<std::endl;  //"ptr=20"と出力
+
+}//ここで、ptrのディストラクタが呼ばれる
+ //メモリの所有権を持つポインタがいなくなったので、解放される
+
+```
 
 # ROS parameter server
+
+# [ROS message](http://wiki.ros.org/msg)
+consist of fields and constants. `rosmsg list` shows currently available message types.
+
+# [ROS concepts](http://wiki.ros.org/ROS/Concepts)
+
+# [catkin/CMakeLists.txt](http://wiki.ros.org/catkin/CMakeLists.txt)
+The CMakeLists.txt file used for a catkin project is a standard vanilla CMakeLists.txt file with a few additional constraints. 
+Your CMakeLists.txt file MUST follow this format otherwise your packages will not build correctly. The order in the configuration DOES count.
+
+1. Required CMake Version (cmake_minimum_required)
+1. Package Name (project())
+1. Find other CMake/Catkin packages needed for build (find_package())
+1. Enable Python module support (catkin_python_setup())
+1. Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())
+1. Invoke message/service/action generation (generate_messages())
+1. Specify package build info export (catkin_package())
+1. Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())
+1. Tests to build (catkin_add_gtest())
+1. Install rules (install()) 
+
+If a package is found by CMake through find_package, it results in the creation of several CMake environment variables that give information about the found package. These environment variables can be utilized later in the CMake script. The environment variables describe where the packages exported header files are, where source files are, what libraries the package depends on, and the paths of those libraries. The names always follow the convention of \<PACKAGE NAME\>_\<PROPERTY\>:
+
+*    \<NAME\>_FOUND - Set to true if the library is found, otherwise false
+*    \<NAME\>_INCLUDE_DIRS or \<NAME\>_INCLUDES - The include paths exported by the package
+*    \<NAME\>_LIBRARIES or \<NAME\>_LIBS - The libraries exported by the package
+*    \<NAME\>_DEFINITIONS - ? 
 
 # what's up with the ampersand & in function parameters?
 ## what does an & even mean??
@@ -230,3 +296,5 @@ outputs
 32
 32
 ```
+
+# composite design pattern
