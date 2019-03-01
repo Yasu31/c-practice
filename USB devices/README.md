@@ -63,4 +63,10 @@ location of device files. Everything is a file, in UNIX.
 
 screen command is actually a **terminal multiplexer**- more about that in */Terminal stuff*.
 
-connect to mouse?
+# polling
+Polling is the process where the computer or controlling device waits for an external device to check for its readiness or state, often with low-level hardware.
+ 
+# connecting to serial in C++
+see ublox repository
+
+

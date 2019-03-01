@@ -34,10 +34,16 @@ MyClass::MyClass(){
 
 # what's the deal with `chmod`??
 `$ chmod +x ????`
-
+changing permissions
 # gcc
+the compiler. But it's better not to use it directly but use CMake, since the gcc commands can quickly get convoluted.
 
 # header file
+Has the declarations.
+
+>A declaration introduces an identifier and describes its type, be it a type, object, or function. A declaration is what the compiler needs to accept references to that identifier. 
+
+>A definition actually instantiates/implements this identifier. It's what the linker needs in order to link references to those entities.
 
 # const, constexpr
 https://qiita.com/saltheads/items/dd65935878a0901fe9e7
@@ -76,7 +82,94 @@ int main()
 }
 ```
 
-# template
+# [template](https://en.wikipedia.org/wiki/Template_(C%2B%2B))
+this is apparently a very strong concept...
+## function templates
+works like a function but its arguments can be many different types
+
+``` cpp
+template <typename T>
+T max(T x, T y)
+{
+    if (x < y)
+        return y;
+    else
+        return x;
+}
+```
+
+## class templates
+https://www.tutorialspoint.com/cplusplus/cpp_templates.htm
+``` cpp
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+template <class T>
+class Stack { 
+   private: 
+      vector<T> elems;    // elements 
+
+   public: 
+      void push(T const&);  // push element 
+      void pop();               // pop element 
+      T top() const;            // return top element 
+      
+      bool empty() const {      // return true if empty.
+         return elems.empty(); 
+      } 
+}; 
+
+template <class T>
+void Stack<T>::push (T const& elem) { 
+   // append copy of passed element 
+   elems.push_back(elem);    
+} 
+
+template <class T>
+void Stack<T>::pop () { 
+   if (elems.empty()) { 
+      throw out_of_range("Stack<>::pop(): empty stack"); 
+   }
+   
+   // remove last element 
+   elems.pop_back();         
+} 
+
+template <class T>
+T Stack<T>::top () const { 
+   if (elems.empty()) { 
+      throw out_of_range("Stack<>::top(): empty stack"); 
+   }
+   
+   // return copy of last element 
+   return elems.back();      
+} 
+
+int main() { 
+   try {
+      Stack<int>         intStack;  // stack of ints 
+      Stack<string> stringStack;    // stack of strings 
+
+      // manipulate int stack 
+      intStack.push(7); 
+      cout << intStack.top() <<endl; 
+
+      // manipulate string stack 
+      stringStack.push("hello"); 
+      cout << stringStack.top() << std::endl; 
+      stringStack.pop(); 
+      stringStack.pop(); 
+   } catch (exception const& ex) { 
+      cerr << "Exception: " << ex.what() <<endl; 
+      return -1;
+   } 
+} 
+```
 
 # vectors, arrays
 std::vector::data(), std::array::data()- returns pointer to first element of std::vector / std::array
@@ -106,15 +199,16 @@ my_value.data = 5;
 
 uint32_t serial_size = ros::serialization::serializationLength(my_value);
 boost::shared_array<uint8_t> buffer(new uint8_t[serial_size]);
-
+// get() returns a pointer to the array
 ser::OStream stream(buffer.get(), serial_size);
 ser::serialize(stream, my_value);
 ```
+only the fields of messages are serialized (and not constants), and in the order defined in the .msg file.
 
 # ostream
 http://stlalv.la.coocan.jp/Stream.html
 
-Output stream.
+Output stream. Can output to console, file, etc... versatile!
 
 # pure virtual functions
 ```cpp
@@ -141,6 +235,48 @@ public:
 ```
 
 This means that charge() is a *pure virtual function*; A class that has even a single pure virtual function is an *abstract class*. Instances of abstract classes cannot be created; it is supposed to be used as a template for its child classes.
+
+# virtual base class
+* [VIrtual Inheritance](https://en.wikipedia.org/wiki/Virtual_inheritance)-Wiki
+
+``` cpp
+class A { public: void Foo() {} };
+class B : public A {};
+class C : public A {};
+class D : public B, public C {};
+```
+results in the "dreaded diamond"
+``` 
+  A
+ / \
+B   C
+ \ /
+  D
+```
+when `D d; d.Foo();` is called is `d.Foo()` B's Foo or C's Foo?
+
+This can be avoided by converting, such as `static_cast<B&>(d).Foo()` or `d.B::Foo()`
+
+``` cpp
+struct Animal {
+  virtual ~Animal() { }
+  virtual void eat(){}
+};
+
+// Two classes virtually inheriting Animal:
+struct Mammal : virtual Animal {
+  virtual void breathe(){}
+};
+
+struct WingedAnimal : virtual Animal {
+  virtual void flap(){}
+};
+
+// A bat is still a winged mammal
+struct Bat : Mammal, WingedAnimal {
+};
+```
+> The Animal portion of Bat::WingedAnimal is now the same Animal instance as the one used by Bat::Mammal, which is to say that a Bat has only one, shared, Animal instance in its representation and so a call to Bat::eat() is unambiguous.
 
 # Smart Pointers
 why not take pointers, an already weird concept, and make that even more convoluted and confusing by making it "smart"??
@@ -190,7 +326,11 @@ consist of fields and constants. `rosmsg list` shows currently available message
 
 # [ROS concepts](http://wiki.ros.org/ROS/Concepts)
 
-# [catkin/CMakeLists.txt](http://wiki.ros.org/catkin/CMakeLists.txt)
+## [catkin concepts](http://wiki.ros.org/catkin/conceptual_overview)
+[ROSの新しいビルドシステムcatkinについて](https://myenigma.hatenablog.com/entry/20131229/1388320084)
+
+
+## [catkin/CMakeLists.txt](http://wiki.ros.org/catkin/CMakeLists.txt)
 The CMakeLists.txt file used for a catkin project is a standard vanilla CMakeLists.txt file with a few additional constraints. 
 Your CMakeLists.txt file MUST follow this format otherwise your packages will not build correctly. The order in the configuration DOES count.
 
@@ -211,6 +351,9 @@ If a package is found by CMake through find_package, it results in the creation 
 *    \<NAME\>_INCLUDE_DIRS or \<NAME\>_INCLUDES - The include paths exported by the package
 *    \<NAME\>_LIBRARIES or \<NAME\>_LIBS - The libraries exported by the package
 *    \<NAME\>_DEFINITIONS - ? 
+
+## tf
+* [世界で一番簡単なtfの使い方](https://myenigma.hatenablog.com/entry/20130210/1360491625)- myenigma
 
 # what's up with the ampersand & in function parameters?
 ## what does an & even mean??
@@ -234,6 +377,7 @@ A reference cannot, and must be assigned at initialization:
 int x = 5;
 int y = 6;
 int &r = x;
+int& l = x; // same thing
 ```
 
 reference shares the same memory address as the value that was assigned at initialization.
@@ -297,4 +441,31 @@ outputs
 32
 ```
 
-# composite design pattern
+# boost::bind()
+https://www.boost.org/doc/libs/1_66_0/libs/bind/doc/html/bind.html
+> boost::bind is a generalization of the standard functions std::bind1st and std::bind2nd.
+ok....???
+
+``` cp
+int f(int a, int b)
+{
+    return a + b;
+}
+
+int g(int a, int b, int c)
+{
+    return a + b + c;
+}
+```
+`bind(f, 1, 2)` will return a *function object* that returns f(1,2) and takes no arguments. `bind(f, _1, 5)` will return a function object that takes one argument- `bind(f, _1, 5)(x)` is `f(x, 5)`.
+
+# boost::function
+
+
+# c++ struct vs class
+basically the same except that the default accessibility is **private** for class, and **public** for structs.
+
+then why the fuck do you keep them both in the language, just pick one name and be done with it you idiots
+
+## what is it when you call a class without instance???
+
