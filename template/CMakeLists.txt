@@ -1,0 +1,2 @@
+add_executable(class_template class_template.cpp)
+add_executable(template_specialization template_specialization.cpp)

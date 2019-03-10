@@ -1,5 +1,4 @@
 # USB devices
-
 ## How to identify a device
 The 4 first hexadecimal digits are the Vendor ID (04b3 = IBM).
 
@@ -69,4 +68,15 @@ Polling is the process where the computer or controlling device waits for an ext
 # connecting to serial in C++
 see ublox repository
 
+# [serial terminal basics](https://learn.sparkfun.com/tutorials/terminal-basics/all#connecting-to-your-device)- sparkfun
 
+# serial monitor
+[Minicom](https://elinux.org/Minicom) seems the most useful (can display in both ASCII and hex). Launch `minicom -s`, and if you want line wrapping on, `minicom -s -w`.
+
+
+# references
+* [boost::asio::serial_io::read](https://www.boost.org/doc/libs/1_69_0/doc/html/boost_asio/reference/read.html)
+* [boost::asio::serial_io::async_read_some](https://www.boost.org/doc/libs/1_69_0/doc/html/boost_asio/reference/serial_port/async_read_some.html)
+* [boost::asio::serial_port で ZigBee と会話してみた](http://tips.hecomi.com/entry/20120728/1343504831)
+* [Boost.Asio で read / async_read を使用する際の注意点](http://amedama1x1.hatenablog.com/entry/2014/06/16/210600)
+* [【Boost】シリアル通信](http://blog.livedoor.jp/k_yon/archives/52145222.html)

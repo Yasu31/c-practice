@@ -82,93 +82,30 @@ int main()
 }
 ```
 
-# [template](https://en.wikipedia.org/wiki/Template_(C%2B%2B))
-this is apparently a very strong concept...
-## function templates
-works like a function but its arguments can be many different types
+# typedef, struct
+[構造体](https://www.cc.kyoto-su.ac.jp/~yamada/programming/struct.html)
 
-``` cpp
-template <typename T>
-T max(T x, T y)
-{
-    if (x < y)
-        return y;
-    else
-        return x;
+typedef can give a new name to types, e.g. `int * intPtr_t`.
+
+struct is kind of like a class but in C
+
+``` c
+struct _person{
+	char name[20];
+	char sex;
+	int age;
 }
+
+struct _person bob;
 ```
+the `struct` keyword is always required when making new instances of structs. So it is common to use `typedef` and do this:
 
-## class templates
-https://www.tutorialspoint.com/cplusplus/cpp_templates.htm
-``` cpp
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <string>
-#include <stdexcept>
+``` c
+typedef struct _person{
+	/* whatever */
+} person_t;
 
-using namespace std;
-
-template <class T>
-class Stack { 
-   private: 
-      vector<T> elems;    // elements 
-
-   public: 
-      void push(T const&);  // push element 
-      void pop();               // pop element 
-      T top() const;            // return top element 
-      
-      bool empty() const {      // return true if empty.
-         return elems.empty(); 
-      } 
-}; 
-
-template <class T>
-void Stack<T>::push (T const& elem) { 
-   // append copy of passed element 
-   elems.push_back(elem);    
-} 
-
-template <class T>
-void Stack<T>::pop () { 
-   if (elems.empty()) { 
-      throw out_of_range("Stack<>::pop(): empty stack"); 
-   }
-   
-   // remove last element 
-   elems.pop_back();         
-} 
-
-template <class T>
-T Stack<T>::top () const { 
-   if (elems.empty()) { 
-      throw out_of_range("Stack<>::top(): empty stack"); 
-   }
-   
-   // return copy of last element 
-   return elems.back();      
-} 
-
-int main() { 
-   try {
-      Stack<int>         intStack;  // stack of ints 
-      Stack<string> stringStack;    // stack of strings 
-
-      // manipulate int stack 
-      intStack.push(7); 
-      cout << intStack.top() <<endl; 
-
-      // manipulate string stack 
-      stringStack.push("hello"); 
-      cout << stringStack.top() << std::endl; 
-      stringStack.pop(); 
-      stringStack.pop(); 
-   } catch (exception const& ex) { 
-      cerr << "Exception: " << ex.what() <<endl; 
-      return -1;
-   } 
-} 
+person_t mary;
 ```
 
 # vectors, arrays
@@ -461,6 +398,7 @@ int g(int a, int b, int c)
 
 # boost::function
 
+# boost::call_traits
 
 # c++ struct vs class
 basically the same except that the default accessibility is **private** for class, and **public** for structs.
@@ -469,3 +407,10 @@ then why the fuck do you keep them both in the language, just pick one name and 
 
 ## what is it when you call a class without instance???
 
+
+## iterator
+
+
+# code style guides
+* [ROS Python style guide](http://wiki.ros.org/PyStyleGuide)
+* [ROS C++ style guids](http://wiki.ros.org/CppStyleGuide)
