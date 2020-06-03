@@ -10,3 +10,6 @@ target_link_libraries(practice ${EIGEN3_LIBRARIES})
 
 add_executable(block_operations block_operations.cpp)
 target_link_libraries(block_operations ${EIGEN3_LIBRARIES})
+
+add_executable(initializations initializations.cpp)
+target_link_libraries(initializations ${EIGEN3_LIBRARIES})
